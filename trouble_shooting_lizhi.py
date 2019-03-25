@@ -7,7 +7,7 @@ import re
 import html
 from configparser import ConfigParser
 
-regex_vr = '\<div id=\"sogou_vr_(.*?)_'
+regex_vr = '\<div.*id=\"sogou_vr_(.*?)_'
 regex_lizhi = '\<div .* id=\"sogou_vr_kmap_(.*?)_'
 regex_tupu = '\<div .* id=\"lz-top-(.*?)\"'
 regex_tupu_8_1 = 'id=\"kmap-jzvr-81-container\"'
@@ -300,7 +300,9 @@ if __name__ == '__main__':
 
     url_yiliao_19 = "https://wap.sogou.com/web/searchList.jsp?uID=AAFesoLIJAAAAAqZOz4PmgoAkwA%3D&v=5&dp=1&w=1283&t=1551950377324&s_t=1551950385308&s_from=result_up&tabMode=1&htprequery=%E5%AD%95%E5%A6%87%E5%BF%85%E5%90%83%E7%9A%8412%E7%A7%8D%E6%B0%B4%E6%9E%9C&keyword=%E9%A2%88%E6%A4%8E%E7%97%8510%E7%A7%8D%E9%94%BB%E7%82%BC%E6%96%B9%E6%B3%95&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=c11455b2-7bd2-4595-ac8d-899fccf4dfd3&sugsuv=AAFesoLIJAAAAAqZOz4PmgoAkwA%3D&sugtime=1551950385310&wm=3206&dbg=on"
 
-    source_page = get_page_result(url_yiliao_19)
+    url_case = "https://m.sogou.com/web/searchList.jsp?uID=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&v=5&dp=1&w=1283&t=1553516280102&s_t=1553516305509&s_from=result_up&htprequery=%E5%B9%B3%E5%A4%B4%E5%93%A5%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%A8%E7%89%A9&keyword=%E5%8D%8E%E4%B8%BAP30&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=7a03ad13-c42e-4600-9f14-179421f19063&sugsuv=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&sugtime=1553516305510&wm=3207"
+
+    source_page = get_page_result(url_vr_2)
     res_dict = check_result(source_page)
     for key in res_dict:
         print('key:%s  value:%s' % (key, res_dict[key]))
