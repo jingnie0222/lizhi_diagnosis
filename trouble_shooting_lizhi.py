@@ -81,7 +81,8 @@ def classify_res(first_result):
 
         if pat_vr:
             vr_vrid = pat_vr.group(1)
-            res_type = "VR"
+            if vr_vrid.startswith(('1', '2', '4', '7')):
+                res_type = "VR"
 
         if pat_lizhi:
             vr_vrid = pat_lizhi.group(1)
@@ -302,7 +303,15 @@ if __name__ == '__main__':
 
     url_case = "https://m.sogou.com/web/searchList.jsp?uID=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&v=5&dp=1&w=1283&t=1553516280102&s_t=1553516305509&s_from=result_up&htprequery=%E5%B9%B3%E5%A4%B4%E5%93%A5%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%A8%E7%89%A9&keyword=%E5%8D%8E%E4%B8%BAP30&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=7a03ad13-c42e-4600-9f14-179421f19063&sugsuv=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&sugtime=1553516305510&wm=3207"
 
-    source_page = get_page_result(url_vr_2)
+    url_case2 = "https://m.sogou.com/web/searchList.jsp?uID=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&v=5&dp=1&w=1283&t=1553518946759&s_t=1553578636250&s_from=result_up&htprequery=%E5%8D%8E%E4%B8%BAP30&keyword=%E5%9B%BD%E7%8E%8B%E6%80%8E%E4%B9%88%E8%B5%B0&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=cff89c32-b434-4c0b-ba3c-4402fdc2abf2&sugsuv=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&sugtime=1553578636252&wm=3207"
+
+    url_vr_3 = "https://m.sogou.com/web/searchList.jsp?uID=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&v=5&dp=1&w=1283&t=1553578637255&s_t=1553579293088&s_from=result_up&htprequery=%E5%9B%BD%E7%8E%8B%E6%80%8E%E4%B9%88%E8%B5%B0&keyword=%E6%95%99%E5%B8%88%E8%B5%84%E6%A0%BC%E8%AF%81&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=83cdcd0a-657a-40de-bcee-a0a32c64b6fc&sugsuv=AAFBjmFrJgAAAAqKDCm%2F4wEAkwA%3D&sugtime=1553579293089&wm=3207"
+
+    url_vr_4 = "https://m.sogou.com/web/searchList.jsp?uID=AAGOajxvJgAAAAqKDCgduwAA1wA%3D&v=5&dp=1&w=1283&t=1553580593224&s_t=1553581938383&s_from=result_up&htprequery=%E4%B8%80%E5%88%B9%E9%82%A3%E6%98%AF%E5%A4%9A%E4%B9%85&keyword=%E5%BE%AE%E5%8D%9A&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=42bf24bc-cd8a-4bbd-87a6-cc3e2124a12c&sugsuv=AAGOajxvJgAAAAqKDCgduwAA1wA%3D&sugtime=1553581938385&wm=3207"
+
+    url_vr_5 = "https://m.sogou.com/web/searchList.jsp?uID=Kk6oNl1Hu3zHTKMJ&v=5&dp=1&w=1278&t=1553582214924&s_t=1553582290553&s_from=result_up&htprequery=%E8%A5%BF%E5%AE%89%E5%88%B0%E6%88%90%E9%83%BD&keyword=%E5%85%B4%E4%B8%9A%E9%93%B6%E8%A1%8C%E8%BD%AC%E5%88%B0%E5%86%9C%E4%B8%9A%E9%93%B6%E8%A1%8C&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=401f60fc-9b57-499e-ac87-f5bffd2adae9&sugsuv=AAGOajxvJgAAAAqKDCgduwAA1wA%3D&sugtime=1553582290554&wm=3207"
+
+    source_page = get_page_result(url_yiliao_22)
     res_dict = check_result(source_page)
     for key in res_dict:
         print('key:%s  value:%s' % (key, res_dict[key]))
