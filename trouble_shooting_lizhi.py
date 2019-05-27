@@ -97,6 +97,16 @@ def classify_res(first_result):
             vr_vrid = "kmap-jzvr-81-container"
             res_type = "Tupu"
 
+
+        #在pat基础上增加通过pvtype判断类别，解决人工编辑可能导致的结果识别错误问题
+        pvtype = extract_pvtype(first_result)
+        if pvtype:
+            if pvtype.startswith(('15_300_', '18_')):
+                res_type = "Lizhi"
+            else:
+                res_type = "Tupu"
+
+
         return res_type, vr_vrid
 
     except Exception as err:
@@ -113,18 +123,18 @@ def extract_pvtype(first_result):
             pat_resin = re.search(r'kmap xml源码(.*?)/DOCUMENT&gt', first_result, flags=re.DOTALL)
             pat_node = re.search(r'kmap xml源码(.*?)&lt;/doc&gt;', first_result, flags=re.DOTALL)
 
-        pat_kmap_xml = pat_resin if pat_resin else pat_node
+            pat_kmap_xml = pat_resin if pat_resin else pat_node
 
-        if pat_kmap_xml:
-            kmap_debug = pat_kmap_xml.group(1)
-            pat_pvtype = re.search(r'pvtype=&quot;(.*?)&quot;', kmap_debug)
+            if pat_kmap_xml:
+                kmap_debug = pat_kmap_xml.group(1)
+                pat_pvtype = re.search(r'pvtype=&quot;(.*?)&quot;', kmap_debug)
 
-            if pat_pvtype:
-                pvtype = pat_pvtype.group(1)
-                #print(pvtype)
-                return pvtype
-            else:
-                print('[extract_pvtype]:在kmap xml内容中没有提取到pvtype\n')
+                if pat_pvtype:
+                    pvtype = pat_pvtype.group(1)
+                    #print(pvtype)
+                    return pvtype
+                else:
+                    print('[extract_pvtype]:在kmap xml内容中没有提取到pvtype\n')
 
         else:
             print('[extract_pvtype]:没有提取到kmap xml内容\n')
@@ -255,7 +265,7 @@ if __name__ == '__main__':
 
     url_vr_2 = 'https://wap.sogou.com/web/searchList.jsp?uID=Kk6oNl1Hu3zHTKMJ&v=5&dp=1&w=1278&t=1546942201053&s_t=1546948617196&tabMode=1&s_from=result_up&htprequery=%E8%A2%AB%E8%9A%82%E8%9A%81%E5%92%AC%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E&keyword=%E7%BB%BF%E8%8C%B6%E5%A9%8A%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=a734b863-2e90-46d7-9704-4ad2003be5f6&sugsuv=AAFesoLIJAAAAAqZOz4PmgoAkwA%3D&sugtime=1546948617199&wm=3206'
 
-    url_youzhi = 'http://tc.wap.sogou/web/searchList.jsp?uID=Kk6oNl1Hu3zHTKMJ&v=5&dp=1&w=1278&t=1546948618405&s_t=1546948771482&tabMode=1&s_from=result_up&htprequery=%E7%BB%BF%E8%8C%B6%E5%A9%8A%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D&keyword=%E5%B9%B3%E5%A4%B4%E5%93%A5%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%A8%E7%89%A9&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=30d105f9-ef2f-4d59-9947-238fe3ed2e21&sugsuv=AAFesoLIJAAAAAqZOz4PmgoAkwA%3D&sugtime=1546948771484&wm=3206'
+    url_youzhi = 'http://wap.sogou.com/web/searchList.jsp?uID=Kk6oNl1Hu3zHTKMJ&v=5&dp=1&w=1278&t=1546948618405&s_t=1546948771482&tabMode=1&s_from=result_up&htprequery=%E7%BB%BF%E8%8C%B6%E5%A9%8A%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D&keyword=%E5%B9%B3%E5%A4%B4%E5%93%A5%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%A8%E7%89%A9&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=30d105f9-ef2f-4d59-9947-238fe3ed2e21&sugsuv=AAFesoLIJAAAAAqZOz4PmgoAkwA%3D&sugtime=1546948771484&wm=3206'
 
     url_tupu_nolz = 'https://wap.sogou.com/web/searchList.jsp?uID=Kk6oNl1Hu3zHTKMJ&v=5&dp=1&w=1278&t=1546948772756&s_t=1546948935737&tabMode=1&s_from=result_up&htprequery=%E5%B9%B3%E5%A4%B4%E5%93%A5%E6%98%AF%E4%BB%80%E4%B9%88%E5%8A%A8%E7%89%A9&keyword=%E7%94%9F%E5%BD%93%E4%BD%9C%E4%BA%BA%E6%9D%B0+%E6%AD%BB%E4%BA%A6%E4%B8%BA%E9%AC%BC%E9%9B%84%E6%98%AF%E8%B0%81%E5%86%99%E7%9A%84+&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=76dc9817-3d06-4faf-8e0c-1c507d81319c&sugsuv=AAFesoLIJAAAAAqZOz4PmgoAkwA%3D&sugtime=1546948935739&wm=3206'
 
@@ -311,7 +321,9 @@ if __name__ == '__main__':
 
     url_vr_5 = "https://m.sogou.com/web/searchList.jsp?uID=Kk6oNl1Hu3zHTKMJ&v=5&dp=1&w=1278&t=1553582214924&s_t=1553582290553&s_from=result_up&htprequery=%E8%A5%BF%E5%AE%89%E5%88%B0%E6%88%90%E9%83%BD&keyword=%E5%85%B4%E4%B8%9A%E9%93%B6%E8%A1%8C%E8%BD%AC%E5%88%B0%E5%86%9C%E4%B8%9A%E9%93%B6%E8%A1%8C&pg=webSearchList&s=%E6%90%9C%E7%B4%A2&suguuid=401f60fc-9b57-499e-ac87-f5bffd2adae9&sugsuv=AAGOajxvJgAAAAqKDCgduwAA1wA%3D&sugtime=1553582290554&wm=3207"
 
-    source_page = get_page_result(url_yiliao_22)
+    url_wangtao = "http://m.sogou.com/web/searchList.jsp?keyword=%E5%88%98%E7%92%87%E8%80%81%E5%85%AC"
+
+    source_page = get_page_result(url_youzhi)
     res_dict = check_result(source_page)
     for key in res_dict:
         print('key:%s  value:%s' % (key, res_dict[key]))
